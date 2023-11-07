@@ -18,8 +18,8 @@ import {
   TabPanel
 } from '@chakra-ui/react';
 import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
-import { MintPage } from "./components/mint";
-import { MyNftPage } from "./components/MyNft";
+import { MintPage } from "../components/mint";
+import { MyNftPage } from "../components/MyNft";
 
 
 const Home: NextPage = () => {

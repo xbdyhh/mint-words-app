@@ -7,7 +7,7 @@ import {
     Center
   } from '@chakra-ui/react';
 import { useState } from 'react';
-import Abi from "../../config/abi";
+import Abi from "../config/abi";
 import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { getAccount } from '@wagmi/core'
 
