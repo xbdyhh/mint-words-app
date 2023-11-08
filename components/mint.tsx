@@ -4,9 +4,11 @@ import {
     Spacer,
     FormControl,
     Input,
-    Center
+    Center,
+    Flex,
+    Text
   } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Abi from "../config/abi";
 import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { getAccount } from '@wagmi/core'
@@ -20,12 +22,16 @@ const contractConfig = {
 
 
 export const MintPage = ()=>{
-    const[word, setword]  = useState("put you words here!");
+    const[word, setword]  = useState("");
     const[isSubmmit, setIsSubmit] = useState(false);
-    const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => setword(e.target.value)
-    const isError = word === ''
-    const account = getAccount()
+    const[isError, setisError] = useState(false);
 
+    const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => setword(e.target.value)
+    const account = getAccount()
+    useEffect(() => {
+        setisError(word === '');
+      }, [word])
+    
     const { config: mintWriteConfig } = usePrepareContractWrite({
         ...contractConfig,
         functionName: 'mint',
@@ -44,16 +50,17 @@ export const MintPage = ()=>{
       }
 
     return(
-        <Box w={'max-content'} borderWidth={100} borderColor={'transparent'}>
-            <svg width="350" height="350" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" height="350" width="350" fill="black"/>  <text x="0" y="15" fill="white">{word}</text></svg>
+        <Box  borderWidth={100} borderColor={'transparent'}>
+            <Center><Text>Mint your own words NFT!!!</Text></Center>
+            <Center><Text>just click the faucet, input words and click the mint!</Text></Center>
+            <Spacer h={5}/>
+            <Center><svg  width="350" height="350" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" height="350" width="350" fill="black"/>  <text x="0" y="15" fill="white">{word}</text></svg></Center>
             <Spacer h={5}/>
             <FormControl isInvalid={isError}  >
-            <Input type='email' w={350} placeholder='put your words here!' value={word} onChange={handleInputChange} />
+            <Center><Input type='email' w={350} placeholder='put your words here!' value={word} onChange={handleInputChange} /></Center>
             </FormControl>
             <Spacer h={5}/>
-            <Center>
-                <Button colorScheme='blue' isLoading = {isSubmmit} onClick={handleMint}>mint</Button>
-            </Center>
+            <Center><Button colorScheme='blue' isLoading = {isSubmmit} onClick={handleMint}>mint</Button></Center>
         </Box>
         )
 }

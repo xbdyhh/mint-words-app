@@ -1,11 +1,10 @@
 import {
     Box,
-    Button,
-    Spacer,
-    Stack,
+    Grid,
+    GridItem,
     Skeleton
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Abi from "../config/abi";
 import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { getAccount } from '@wagmi/core'
@@ -27,13 +26,17 @@ const NftSvg = ({
         args: [id],
         watch: true,
     });
-    const word:string = NFTwords as string;
+    const[word, setword]  = useState(NFTwords as string);
+    useEffect(() => {
+        setword(NFTwords as string);
+      }, [NFTwords])
+
     return(
-        <svg width="350" height="350" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" height="350" width="350" fill="black"/>  <text x="0" y="15" fill="white">{word}</text></svg>
+        <svg  width="350" height="350" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" height="350" width="350" fill="black"/>  <text x="0" y="15" fill="white">{word}</text></svg>
     )
 }
 
-export const MyNftPage = ()=>{
+const MyNftPage = ()=>{
     const account = getAccount()
 
     const { data:OwnedNFTs } = useContractRead({
@@ -47,16 +50,17 @@ export const MyNftPage = ()=>{
         console.log(NFTList);
     }
     return(
-        <Box w={'max-content'} borderWidth={100} borderColor={'transparent'}>
-            <Stack  spacing={5}>
+        <Box >
+            <Grid  templateColumns='repeat(4, 1fr)' gap={6} >
                 {NFTList?(
                     NFTList.map((NFTID)=>{
                         return(
-                                <NftSvg id={NFTID} key = {NFTID}/>
+                                <GridItem key = {NFTID}><NftSvg id={NFTID} key = {NFTID}/></GridItem>
                         )
                 })
             ):(<Skeleton w="full" h={{ base: 6, sm: 100 }} />)}
-            </Stack>
+            </Grid>
         </Box>
         )
 }
+export default MyNftPage;
