@@ -34,13 +34,9 @@ const Home: NextPage = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const account = getAccount();
   const { chain } = useNetwork()
-  const { chains, error, isLoading, pendingChainId, switchNetwork } =
-    useSwitchNetwork({
-      chainId: 1734636,
-    })
 
   function handleFaucet() {
-    fetch(`http://65.109.65.22:14451/faucet?address=${account.address}`)?.then(() => alert("token has been sent!"))
+    fetch(`https://faucet-dym.panxinyang.top/faucet?address=${account.address}`)?.then(() => alert("token has been sent!"))
   }
   return (
     <Box>
