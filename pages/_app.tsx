@@ -3,11 +3,12 @@ import {panxinyang} from '../config/chians';
 import '@rainbow-me/rainbowkit/styles.css';
 import { connectorsForWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import type { AppProps } from 'next/app';
-import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { configureChains, createConfig, WagmiConfig, useSwitchNetwork } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import {injectedWallet} from '@rainbow-me/rainbowkit/wallets';
 import { ChakraProvider } from '@chakra-ui/react';
 import {defaultTheme}from '../config/theme';
+import { zora } from 'viem/chains';
 
 
 
@@ -17,6 +18,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   ],
   [publicProvider()]
 );
+
 
 const connectors = connectorsForWallets([
   {
@@ -40,7 +42,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ChakraProvider theme={defaultTheme}>
 
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains} modalSize="compact" >
+      <RainbowKitProvider chains={chains} modalSize="compact" coolMode >
         <Component {...pageProps} />
       </RainbowKitProvider>
     </WagmiConfig>

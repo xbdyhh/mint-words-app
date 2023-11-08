@@ -14,13 +14,7 @@ export const panxinyang = {
     default: { http: ['https://froopyland.dymension.xyz/4/panxinyang_1734636-1/evmrpc'] },
   },
   blockExplorers: {
-    etherscan: { name: 'N/A', url: '' },
-    default: { name: 'N/A', url: '' },
-  },
-  contracts: {
-    mintwords: {
-      address: '0xd0eF18c28C0CE7FeD71D72A0BD2ED5960cD51f9A',
-      blockCreated: 2580,
-    },
+    etherscan: { name: 'SnowTrace', url: 'https://snowtrace.io' },
+    default: { name: 'SnowTrace', url: 'https://snowtrace.io' },
   },
 } as const satisfies Chain
